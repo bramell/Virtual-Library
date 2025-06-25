@@ -17,15 +17,15 @@ This is meant as a practice and was done in my spare time.
 
 ---
 
-## Projektstruktur
+## Project Structure
 
 book_api/
-    --main.py # Command-line-interface (CLI)
-    --db.py # Database logic (MongoDB + JSON-synk)
-    --routes.py # Flask-API
-    --books.json # Synced JSON-file with all books
-    --requirements.txt # Dependencies
-    --README.md # Documentation
+    --main.py # Command-line-interface (CLI)  
+    --db.py # Database logic (MongoDB + JSON-synk)  
+    --routes.py # Flask-API  
+    --books.json # Synced JSON-file with all books  
+    --requirements.txt # Dependencies  
+    --README.md # Documentation  
 
 ---
 
@@ -64,7 +64,7 @@ It is removed from the database and removed from books.json
 
 ---
 
-## Future development
+## Future Development
 
 - GET /books/<isbn> to retrieve a book via API
 - POST, PUT, DELETE endpoints
