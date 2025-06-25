@@ -21,12 +21,12 @@ This is meant as a practice and was done in my spare time.
 
 book_api/
 │
-├── main.py-------------# Command-line-interface (CLI)
-├── db.py---------------# Database logic (MongoDB + JSON-synk)
-├── routes.py-----------# Flask-API
-├── books.json----------# Synced JSON-file with all books
-├── requirements.txt----# Dependencies
-└── README.md-----------# Documentation
+├── main.py # Command-line-interface (CLI)
+├── db.py # Database logic (MongoDB + JSON-synk)
+├── routes.py # Flask-API
+├── books.json # Synced JSON-file with all books
+├── requirements.txt # Dependencies
+└── README.md # Documentation
 
 ---
 
