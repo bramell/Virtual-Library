@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import json
-import re
+import os
 
 # Local/URI connection
 client = MongoClient("mongodb://localhost:27017")
@@ -16,6 +16,7 @@ def add_book(book_data):
     # Validate data --> add book
     if book_data != {}:
         collection.insert_one(book_data)
+        add_book_json(book_data)
 
 
 
@@ -43,6 +44,7 @@ def delete_book(query):
     # Count the amount of books before and after removal
     count_before = get_all_books()
     collection.delete_one({"isbn": query})
+    remove_book_from_json(query)
     count_after = get_all_books()
 
     # Comparison to see if the book is removed
@@ -66,19 +68,49 @@ def search_books(query):
 
         
 
+''' Function to sync added book between database and json file '''
+def add_book_json(new_book):
+    json_path = os.path.join(os.path.dirname(__file__), "books.json")
+
+    try:
+        # Read existing books
+        with open(json_path, "r", encoding="utf-8") as f:
+            books = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        books = []
+
+    # Remove MongoDBs ObjectId - Raises TypeError: Object of type ObjectId is not JSON serializable
+    if "_id" in new_book:
+        del new_book["_id"]
+
+    # Add the new book
+    books.append(new_book)
+
+    # Write to file
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(books, f, ensure_ascii=False, indent=4)
 
 
-'''
-def load_from_json():
-    1. Read json-file
-    2. Validate each book
-    3. Add to database
-'''
 
+''' Function to sync deleted book between database and json file '''
+def remove_book_from_json(deleted_book):
+    json_path = os.path.join(os.path.dirname(__file__), "books.json")
 
-'''
-def export_to_json():
-    1. Get books from DB
-    2. Remove or convert _id (ObjectId is not JSON compatible)
-    3. Save list as JSON to file
-'''
+    try:
+        # Read existing books
+        with open(json_path, "r", encoding="utf-8") as f:
+            books = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        books = []
+
+    # Removes the book with matching ISBN and adds the rest of the books to a new list
+    updated_books = []
+    for book in books:
+        if book.get("isbn") != deleted_book.get("isbn"):
+            updated_books.append()
+    
+    books = updated_books # Update the old list
+
+    # Write to file
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(books, f, ensure_ascii=False, indent=4)
