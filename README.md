@@ -1,8 +1,8 @@
 ## Virtual Library
 
-A Python-project for managing a database for books using MongoDB and a JSON-based API through Flask. 
+A Python-project for managing a database for books using MongoDB and an API through Flask. 
 Add, remove and get books though the terminal or a REST API.
-This is meant as a practice and was done in my spare time.
+The purpose of this project is as a practice and is updated in my spare time.
 
 ---
 
@@ -10,8 +10,6 @@ This is meant as a practice and was done in my spare time.
 
 - Add books (title, author, ISBN, year, category)
 - Remove books through ISBN
-- Syncronisation betweeem MongoDB och `books.json`
-- JSON-based export of the whole database.
 - REST API with Flask:
   - `GET /books` – get all books.
 
@@ -22,8 +20,7 @@ This is meant as a practice and was done in my spare time.
 book_api/  
     --main.py           # Command-line-interface (CLI)  
     --db.py             # Database logic (MongoDB + JSON-synk)  
-    --routes.py         # Flask-API  
-    --books.json        # Synced JSON-file with all books  
+    --routes.py         # Flask-API   
     --requirements.txt  # Dependencies  
     --README.md         # Documentation  
 
@@ -53,14 +50,14 @@ book_api/
 
 - Bash: python routes.py
 - http://localhost:5000/ - A welcome message
-- http://localhost:5000/books - To access books.json/API
+- http://localhost:5000/books - To access API
 
 
-When you add a book via CLI:
-It is saved to the database and added to books.json
+When you add a book via the interface:
+It is saved to the database
 
 When you remove a book:
-It is removed from the database and removed from books.json
+It is removed from the database
 
 ---
 
