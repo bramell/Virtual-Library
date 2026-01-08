@@ -1,8 +1,17 @@
 from flask import Flask, jsonify
-import json
-import os
+from pymongo import MongoClient
 
 app = Flask(__name__)
+
+client = MongoClient("mongodb://localhost:27017")
+db = client["library"]
+collection = db["books"]
+
+
+
+def get_all_books():
+    """ Returns all books as a list of dictionaries """
+    return list(collection.find({}, {"_id": 0})) #Exclude MongoDB's _id
 
 
 
@@ -13,21 +22,15 @@ def home():
 
 
 @app.route("/books", methods=["GET"])
-def get_json_books():
+def get_books():
     try:
-        # Path to books.json from this file
-        json_path = os.path.join(os.path.dirname(__file__), "books.json")
-
-        # Open file
-        with open(json_path, "r", encoding="utf-8") as file:
-            books = json.load(file)
-
+        books = get_all_books()
+        if not books:
+            return jsonify({"message": "No books found"}), 404
         return jsonify(books)
     
-    except FileNotFoundError:
-        return jsonify({"error": "books.json not found"}), 404
-    except json.JSONDecodeError:
-        return jsonify({"error": "books.json is not valid JSON"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
