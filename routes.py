@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
+import json
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -26,11 +27,25 @@ def get_books():
     try:
         books = get_all_books()
         if not books:
-            return jsonify({"message": "No books found"}), 404
-        return jsonify(books)
+            return Response(
+                json.dumps({"message": "No books found"}, 
+                            ensure_ascii=False),
+                            mimetype="application/json",
+                            status=404
+            )
+        
+        # Return JSON with Swedish chars enabled
+        return Response(
+            json.dumps(books, ensure_ascii=False, indent=4),
+            mimetype="application/json"
+        )
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return Response(
+            json.dumps({"error": str(e)}, ensure_ascii=False),
+            mimetype="application/json",
+            status=500
+        )
 
 
 
