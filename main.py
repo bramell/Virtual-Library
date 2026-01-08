@@ -89,6 +89,9 @@ def view_collection():
         print("Title: ", book["title"], "  ||  ", "Author: ", book["author"], "  ||  ", "ISBN: ", book["isbn"])
         print("-"*100)
 
+    # Wait for input before showing menu again for readability
+    input("\nPress Enter to return to the menu...")
+
 
 
 ''' Function that takes an input to send to db.py for deletion '''
